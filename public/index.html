@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Навчальний веб-ресурс універмагу «Ялинка» для тестування онлайн-каталогу, кошика та оформлення замовлень.">
+  <title>Ялинка — тестування онлайн-магазину</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="announcement">Навчальний проєкт · Тестування онлайн-магазину універмагу «Ялинка»</div>
+  <header>
+    <a class="logo" href="/" aria-label="Ялинка">
+      <span class="logo-tree">Y</span>
+      <strong>ЯЛИНКА</strong>
+    </a>
+    <nav aria-label="Головна навігація">
+      <a class="nav-link active" href="/">Головна</a>
+      <a class="nav-link" href="/catalog.html">Каталог</a>
+      <a class="nav-link" href="/advantages.html">Тестування</a>
+      <a class="nav-link" href="/contacts.html">Контакти</a>
+    </nav>
+    <div class="header-actions">
+      <label class="search-box">
+        <span>⌕</span>
+        <input id="searchInput" type="search" placeholder="Пошук товарів" aria-label="Пошук товарів">
+      </label>
+      <button class="cart-button" id="cartButton" aria-label="Відкрити кошик">
+        <span>Кошик</span>
+        <b id="cartCount">0</b>
+      </button>
+      <a class="staff-link" href="/login.html">Кабінет працівників <span>↗</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <span class="kicker">Універмаг «Ялинка» / онлайн-сервіс</span>
+        <h1>Тестуємо покупки<br><em>від каталогу до кошика.</em></h1>
+        <p>Навчальний веб-ресурс для перевірки онлайн-реалізації продукції: пошуку товарів, керування кількістю, кошика та оформлення замовлень.</p>
+        <a class="shop-button" href="/catalog.html">Перевірити каталог <span>↗</span></a>
+        <div class="hero-proof"><span>✓</span> Актуальні залишки · перевірка кількості · адаптивний інтерфейс</div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="hero-bag">
+          <div class="bag-plant">🌿</div>
+          <div class="bag-label">ЯЛИНКА</div>
+        </div>
+        <div class="hero-tag"><strong>QA</strong><span>тестовий ресурс</span></div>
+        <div class="orbit-text">КАТАЛОГ ● КОШИК ● ЗАМОВЛЕННЯ ●</div>
+      </div>
+    </section>
+
+    <section class="testing-strip" aria-label="Основні сценарії тестування">
+      <div><span>01</span><strong>Каталог</strong><small>Пошук і категорії</small></div>
+      <div><span>02</span><strong>Кошик</strong><small>Кількість і сума</small></div>
+      <div><span>03</span><strong>Замовлення</strong><small>Перевірка форми</small></div>
+      <div><span>04</span><strong>Адаптивність</strong><small>Мобільні пристрої</small></div>
+    </section>
+
+    <section class="home-categories">
+      <div>
+        <span class="section-index">01</span>
+        <div><span class="kicker">Почніть тестування з покупки</span><h2>Категорії товарів</h2></div>
+      </div>
+      <div class="category-links">
+        <a href="/catalog.html?category=Дом та кухня"><span class="category-icon">⌂</span><strong>Дім та кухня</strong><small>Товари для щоденного комфорту</small><b>↗</b></a>
+        <a href="/catalog.html?category=Одяг та аксесуари"><span class="category-icon">◇</span><strong>Одяг та аксесуари</strong><small>Знайдіть потрібний розмір і стиль</small><b>↗</b></a>
+        <a href="/catalog.html?category=Електроніка"><span class="category-icon">⌁</span><strong>Електроніка</strong><small>Перевірте доступність і ціну</small><b>↗</b></a>
+      </div>
+    </section>
+
+    <section class="qa-section">
+      <div class="qa-intro"><span class="kicker">Про навчальний проєкт</span><h2>Що перевіряємо на сайті?</h2><p>Зручний магазин — це не лише гарний каталог. Важливо, щоб кожна дія покупця працювала передбачувано.</p></div>
+      <div class="qa-grid">
+        <article><span>01 / Пошук</span><h3>Знаходження товару</h3><p>Перевіряємо пошук за назвою, фільтри категорій і зрозумілий стан порожньої видачі.</p></article>
+        <article><span>02 / Кількість</span><h3>Синхронізація кошика</h3><p>Кнопки «+» і «−», ручне введення та підсумок замовлення мають оновлюватися узгоджено.</p></article>
+        <article><span>03 / Замовлення</span><h3>Валідація форми</h3><p>Перевіряємо обов’язкові поля, підтвердження покупки та збереження замовлення.</p></article>
+        <article><span>04 / Інтерфейс</span><h3>Зрозумілі помилки</h3><p>Елементи керування мають бути доступними, адаптивними та давати чіткий зворотний зв’язок.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <a class="logo footer-logo" href="/"><span class="logo-tree">Y</span><strong>ЯЛИНКА</strong></a>
+    <p>Навчальний веб-ресурс для тестування онлайн-магазину.</p>
+    <div><a href="tel:+380441234567">+38 044 123 45 67</a><span>hello@yalynka.ua</span></div>
+  </footer>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="cart-panel" id="cartPanel" aria-hidden="true">
+    <div class="cart-header">
+      <div><span>Ваш кошик</span><strong id="cartTitle">0 товарів</strong></div>
+      <button id="closeCart" aria-label="Закрити">×</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div class="total-row"><span>Разом</span><strong id="cartTotal">0 грн</strong></div>
+      <button class="checkout-button" id="checkoutButton">Оформити замовлення</button>
+    </div>
+  </aside>
+
+  <dialog id="checkoutDialog">
+    <form id="checkoutForm">
+      <button class="dialog-close" type="button" aria-label="Закрити">×</button>
+      <span class="dialog-kicker">Останній крок</span>
+      <h2>Оформлення замовлення</h2>
+      <label>Ваше ім’я<input name="name" required autocomplete="name"></label>
+      <label>Телефон<input name="phone" required placeholder="+380..." autocomplete="tel"></label>
+      <label>Спосіб отримання
+        <select name="delivery">
+          <option>Нова Пошта</option>
+          <option>Самовивіз із магазину</option>
+          <option>Кур'єр Ялинки</option>
+        </select>
+      </label>
+      <label>Адреса доставки<input name="address" placeholder="Місто, відділення або адреса"></label>
+      <div class="order-total"><span>До сплати</span><strong id="checkoutTotal">0 грн</strong></div>
+      <button class="submit-order" type="submit">Підтвердити замовлення</button>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

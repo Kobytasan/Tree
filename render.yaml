@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: yalynka-shop
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    disk:
+      name: yalynka-data
+      mountPath: /app/data
+      sizeGB: 1

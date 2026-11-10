@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="uk">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Особистий кабінет — Ялинка</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/styles.css"></head>
+<body class="portal-body">
+  <aside class="portal-sidebar">
+    <a class="portal-brand" href="/"><span>Y</span><strong>ЯЛИНКА</strong></a>
+    <nav>
+      <button class="portal-menu active" data-view="overview"><span>▦</span>Огляд</button>
+      <button class="portal-menu" data-view="orders"><span>▣</span>Замовлення</button>
+      <button class="portal-menu" data-view="stock"><span>▧</span>Товари та склад</button>
+      <button class="portal-menu" data-view="employees"><span>◷</span>Працівники</button>
+      <button class="portal-menu" data-view="profile"><span>◉</span>Мій профіль</button>
+    </nav>
+    <div class="portal-user" id="sidebarUser"></div>
+  </aside>
+  <main class="portal-main">
+    <header class="portal-topbar"><div><small>РОБОЧИЙ ПРОСТІР</small><strong id="activeViewTitle">Огляд</strong></div><button id="logoutButton">Вийти</button></header>
+    <div class="portal-content">
+      <section class="portal-welcome" id="profile"></section>
+      <section id="dashboard"></section>
+    </div>
+  </main>
+  <script>
+    if (!sessionStorage.getItem('yalynka-employee')) location.replace('/login.html');
+    const id = Number(sessionStorage.getItem('yalynka-employee-id') || 1);
+    Promise.all([fetch('/api/employees').then(r => r.json()), fetch('/api/products').then(r => r.json())]).then(([employees, products]) => {
+      const employee = employees.find(item => item.id === id) || employees[0];
+      const revenue = [286400, 224900, 169800, 142300][employee.id - 1];
+      const orders = [86, 72, 54, 41][employee.id - 1];
+      const lowStockProducts = products.filter(product => product.stock < 10).slice(0, 4);
+      document.getElementById('profile').innerHTML = `
+        <span class="kicker">Оглядаємо стан магазину</span>
+        <h1>Добрий день, ${employee.name.split(' ')[0]}!</h1>
+        <p>${employee.position} · ${employee.department}</p>`;
+      document.getElementById('sidebarUser').innerHTML = `<div class="mini-avatar">${employee.avatar}</div><div><strong>${employee.name}</strong><small>${employee.position}</small></div>`;
+      const overview = `
+        <div class="metric-grid">
+          <article><span>Замовлення</span><strong>${orders}</strong><small>за поточний місяць</small></article>
+          <article><span>Оборот</span><strong>${revenue.toLocaleString('uk-UA')} грн</strong><small>загальний дохід</small></article>
+          <article><span>Товарів на складі</span><strong>${products.reduce((sum, p) => sum + p.stock, 0)}</strong><small>одиниць усього</small></article>
+          <article><span>Низький залишок</span><strong>${products.filter(p => p.stock < 10).length}</strong><small>потрібне поповнення</small></article>
+        </div>
+        <div class="overview-columns">
+          <div class="staff-panel recent-orders"><div class="stock-heading"><h2>Останні замовлення</h2><span>Сьогодні</span></div>
+            <div class="order-row"><strong>#1048 · Марія Коваленко</strong><span class="order-status">В роботі</span><b>4 280 грн</b></div>
+            <div class="order-row"><strong>#1047 · Андрій Петренко</strong><span class="order-status done">Закрито</span><b>2 960 грн</b></div>
+            <div class="order-row"><strong>#1046 · Софія Мельник</strong><span class="order-status done">Закрито</span><b>5 740 грн</b></div>
+            <div class="order-row"><strong>#1045 · Іван Бондар</strong><span class="order-status sent">Відправлено</span><b>1 890 грн</b></div>
+          </div>
+          <div class="overview-aside">
+            <section class="overview-widget">
+              <div class="stock-heading"><h2>Потрібне поповнення</h2><span>${lowStockProducts.length} позиції</span></div>
+              ${lowStockProducts.length
+                ? lowStockProducts.map(product => `<div class="low-stock-row"><span>${product.emoji}</span><div><strong>${product.name}</strong><small>${product.category}</small></div><b>${product.stock} шт.</b></div>`).join('')
+                : '<p class="stock-heading">Усі товари є в наявності.</p>'}
+              <button class="portal-menu" type="button" data-open-view="stock">Перейти до складу <span>→</span></button>
+            </section>
+            <section class="overview-widget">
+              <div class="stock-heading"><h2>Швидкий доступ</h2><span>Керування</span></div>
+              <button class="portal-menu" type="button" data-open-view="orders">Переглянути замовлення <span>→</span></button>
+              <button class="portal-menu" type="button" data-open-view="employees">Команда магазину <span>→</span></button>
+            </section>
+          </div>
+        </div>`;
+      const views = {
+        overview,
+        orders: `<div class="staff-panel"><div class="stock-heading"><h2>Замовлення</h2><span>${orders} за місяць</span></div>${[['Ялина Store', 'Закрито', '24 860 грн'], ['Подарунковий салон', 'В роботі', '18 420 грн'], ['Дім і стиль', 'Закрито', '31 750 грн']].map(([name, status, total]) => `<div class="order-row"><strong>${name}</strong><span>${status}</span><b>${total}</b></div>`).join('')}</div>`,
+        stock: `<div class="stock-panel"><div class="stock-heading"><h2>Товари та склад</h2><span>${products.length} позицій</span></div>${products.map(product => `<div class="stock-row"><span>${product.emoji}</span><div><strong>${product.name}</strong><small>${product.category}</small></div><b class="${product.stock < 10 ? 'low' : ''}">${product.stock} шт.</b></div>`).join('')}</div>`,
+        employees: `<div class="staff-panel"><div class="stock-heading"><h2>Працівники магазину</h2><span>${employees.length} співробітники</span></div>${employees.map(item => `<div class="employee-row"><div class="mini-avatar">${item.avatar}</div><div><strong>${item.name}</strong><small>${item.position} · ${item.department}</small></div></div>`).join('')}</div>`,
+        profile: `<div class="staff-panel profile-panel"><div class="mini-avatar">${employee.avatar}</div><h2>${employee.name}</h2><p>${employee.position}</p><dl><dt>Відділ</dt><dd>${employee.department}</dd><dt>Телефон</dt><dd>${employee.phone}</dd><dt>Оборот</dt><dd>${revenue.toLocaleString('uk-UA')} грн</dd></dl></div>`
+      };
+      const titles = { overview: 'Огляд', orders: 'Замовлення', stock: 'Товари та склад', employees: 'Працівники', profile: 'Мій профіль' };
+      document.getElementById('dashboard').innerHTML = overview;
+      document.querySelectorAll('[data-view]').forEach(button => {
+        button.addEventListener('click', () => {
+          document.querySelectorAll('[data-view]').forEach(item => item.classList.remove('active'));
+          button.classList.add('active');
+          document.getElementById('activeViewTitle').textContent = titles[button.dataset.view];
+          document.getElementById('dashboard').innerHTML = views[button.dataset.view];
+        });
+      });
+      document.getElementById('dashboard').addEventListener('click', event => {
+        const shortcut = event.target.closest('[data-open-view]');
+        if (shortcut) document.querySelector(`[data-view="${shortcut.dataset.openView}"]`).click();
+      });
+    });
+    document.getElementById('logoutButton').onclick = () => {
+      sessionStorage.removeItem('yalynka-employee');
+      sessionStorage.removeItem('yalynka-employee-id');
+      location.href = '/login.html';
+    };
+  </script>
+</body>
+</html>

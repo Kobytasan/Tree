@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="uk">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Кабінет працівників — Ялинка</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/styles.css"></head>
+<body class="staff-page">
+  <header><a class="logo" href="/"><span class="logo-tree">Y</span><strong>ЯЛИНКА</strong></a><nav><a class="nav-link" href="/">Головна</a><a class="nav-link" href="/catalog.html">Каталог</a><a class="nav-link" href="/advantages.html">Тестування</a><a class="nav-link" href="/contacts.html">Контакти</a></nav><a class="staff-link" href="/login.html">Вийти <span>↗</span></a></header>
+  <main>
+    <section class="page-heading"><span class="kicker">Внутрішній портал</span><h1>Кабінет працівників</h1></section>
+    <section class="info-page"><div class="staff-grid" id="staffGrid"><div class="loader">Завантаження командної сторінки…</div></div></section>
+  </main>
+  <footer><a class="logo footer-logo" href="/"><span class="logo-tree">Y</span><strong>ЯЛИНКА</strong></a><p>Команда універмагу Ялинка.</p><div><span>Внутрішній портал</span><span>2026</span></div></footer>
+  <script>
+    if (!sessionStorage.getItem('yalynka-employee')) location.replace('/login.html');
+    else location.replace('/employee.html?id=' + sessionStorage.getItem('yalynka-employee-id'));
+    fetch('/api/employees').then(response => response.json()).then(employees => {
+      document.getElementById('staffGrid').innerHTML = employees.map(employee => `
+        <a class="staff-card" href="/employee.html?id=${employee.id}">
+          <div class="staff-avatar">${employee.avatar}</div>
+          <h2>${employee.name}</h2>
+          <strong>${employee.position}</strong>
+          <p>${employee.department}<br><span>${employee.phone}</span></p>
+        </a>
+      `).join('');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Каталог — Ялинка</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <a class="logo" href="/"><span class="logo-tree">Y</span><strong>ЯЛИНКА</strong></a>
+    <nav><a class="nav-link" href="/">Головна</a><a class="nav-link active" href="/catalog.html">Каталог</a><a class="nav-link" href="/advantages.html">Тестування</a><a class="nav-link" href="/contacts.html">Контакти</a></nav>
+    <div class="header-actions">
+      <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Пошук товарів"></label>
+      <button class="cart-button" id="cartButton"><span>Кошик</span><b id="cartCount">0</b></button>
+      <a class="staff-link" href="/login.html">Кабінет працівників <span>↗</span></a>
+    </div>
+  </header>
+  <main>
+    <section class="page-heading"><span class="kicker">Сценарій тестування / пошук і фільтри</span><h1>Каталог товарів</h1></section>
+    <section class="categories">
+      <div class="section-heading"><div><span class="section-index">01</span><h2>Оберіть товари</h2></div><span class="catalog-count" id="catalogCount">8 товарів</span></div>
+      <div class="filter-row" id="filters"></div>
+      <div class="product-grid" id="productGrid"><div class="loader">Завантаження каталогу…</div></div>
+    </section>
+  </main>
+  <footer><a class="logo footer-logo" href="/"><span class="logo-tree">Y</span><strong>ЯЛИНКА</strong></a><p>Щодня — із турботою про ваш вибір.</p><div><a href="tel:+380441234567">+38 044 123 45 67</a><span>hello@yalynka.ua</span></div></footer>
+  <div class="overlay" id="overlay"></div>
+  <aside class="cart-panel" id="cartPanel" aria-hidden="true">
+    <div class="cart-header"><div><span>Ваш кошик</span><strong id="cartTitle">0 товарів</strong></div><button id="closeCart" aria-label="Закрити">×</button></div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer"><div class="total-row"><span>Разом</span><strong id="cartTotal">0 грн</strong></div><button class="checkout-button" id="checkoutButton">Оформити замовлення</button></div>
+  </aside>
+  <dialog id="checkoutDialog"><form id="checkoutForm">
+    <button class="dialog-close" type="button" aria-label="Закрити">×</button><span class="dialog-kicker">Останній крок</span><h2>Оформлення замовлення</h2>
+    <label>Ваше ім’я<input name="name" required autocomplete="name"></label>
+    <label>Телефон<input name="phone" required placeholder="+380..." autocomplete="tel"></label>
+    <label>Спосіб отримання<select name="delivery"><option>Нова Пошта</option><option>Самовивіз із магазину</option><option>Кур'єр Ялинки</option></select></label>
+    <label>Адреса доставки<input name="address" placeholder="Місто, відділення або адреса"></label>
+    <div class="order-total"><span>До сплати</span><strong id="checkoutTotal">0 грн</strong></div><button class="submit-order" type="submit">Підтвердити замовлення</button>
+  </form></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

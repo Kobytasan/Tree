@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="uk">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Вхід для працівників — Ялинка</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/styles.css"></head>
+<body>
+  <header><a class="logo" href="/"><span class="logo-tree">Y</span><strong>ЯЛИНКА</strong></a><nav><a class="nav-link" href="/">Головна</a><a class="nav-link" href="/catalog.html">Каталог</a><a class="nav-link active" href="/login.html">Кабінет працівника</a></nav><a class="staff-link" href="/">На сайт <span>↗</span></a></header>
+  <main class="login-page">
+    <form class="login-panel" id="loginForm">
+      <span class="kicker">Внутрішній портал / Demo</span>
+      <h1>Вхід для<br>працівників</h1>
+      <label>Логін<input name="login" autocomplete="username" required placeholder="Наприклад: director"></label>
+      <label>Пароль<input name="password" type="password" autocomplete="current-password" required placeholder="Введіть пароль"></label>
+      <button type="submit">Увійти до кабінету</button>
+      <div class="login-error" id="loginError"></div>
+    </form>
+    <aside class="demo-panel">
+      <span class="kicker">Демо-доступ</span>
+      <h2>Облікові записи</h2>
+      <div class="demo-account"><strong>Директор · Олена Ялинська</strong><span>Логін: director</span><span>Пароль: 1234</span></div>
+      <div class="demo-account"><strong>Заступник директора</strong><span>Логін: deputy</span><span>Пароль: 1234</span></div>
+      <div class="demo-account"><strong>Менеджер магазину</strong><span>Логін: manager</span><span>Пароль: 1234</span></div>
+      <div class="demo-account"><strong>Адміністратор</strong><span>Логін: admin</span><span>Пароль: 1234</span></div>
+    </aside>
+  </main>
+  <script>
+    const accounts = { director: {password: '1234', id: 1}, deputy: {password: '1234', id: 2}, manager: {password: '1234', id: 3}, admin: {password: '1234', id: 4} };
+    document.getElementById('loginForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const data = Object.fromEntries(new FormData(event.currentTarget));
+      const account = accounts[data.login.trim()];
+      if (!account || account.password !== data.password) {
+        document.getElementById('loginError').textContent = 'Невірний логін або пароль.';
+        return;
+      }
+      sessionStorage.setItem('yalynka-employee', data.login.trim());
+      sessionStorage.setItem('yalynka-employee-id', account.id);
+      location.href = `/employee.html?id=${account.id}`;
+    });
+  </script>
+</body>
+</html>
